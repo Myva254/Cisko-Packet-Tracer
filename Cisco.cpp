@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <limits>
 
 void Ip_checker(std::string *return_ip);
 
@@ -11,34 +11,14 @@ void Ip_checker(std::string *return_ip);
 class device
 {
     private:
-    std::string ip;
+    std::string ip,status;
     int ports;
     std::string name,type;
     bool conneckted = false;
     public:
     
-    device(std::string ip, int ports, std::string name)
-    : ip(ip), ports(ports), name(name) {
-
-    }
-
-    device(std::string ip,int ports)
-    : ip(ip), ports(ports) , name(""){
-        
-    }
-    device(std::string ip)
-    : ip(ip) , ports(0) , name("")
-    {
-        
-    }
-    device() : ip("") , ports (0) , name ("")
-    {
-
-    }
-    device(std::string ip,int ports,std::string name,std::string type) : ip(ip), ports(ports), name (name),type(type)
-        {
-
-        }
+    device(std::string ip = "", int ports = 1, std::string name = "", std::string type = "", std::string status = "shutdown")
+        : ip(ip), ports(ports), name(name), type(type), status(status) {}
 
     void ShowIP()
     {
@@ -51,38 +31,16 @@ class device
 
 
 
-    void Set_IP(std::string ip)
-    {
-        this -> ip = ip;
-    }
-    std::string Get_IP()
-    {
-        return this -> ip;
-    }
-    void Set_Ports(int ports)
-    {
-        this -> ports = ports;
-    }
-    int Get_Ports()
-    {
-        return this -> ports; 
-    }
-    void Set_name(std::string name)
-    {
-        this -> name = name;
-    }
-    std::string Get_name()
-    {
-        return this -> name;
-    } 
-    std::string Get_type()
-    {
-        return type;
-    }
-    void Set_type(std::string type)
-    {
-        this -> type = type;
-    }
+    void Set_IP(std::string ip){this->ip = ip;}
+    std::string Get_IP(){return ip;}
+    void Set_Ports(int ports){this->ports = ports;}
+    int Get_Ports(){return ports;}
+    void Set_name(std::string name){this->name = name;}
+    std::string Get_name(){return name;} 
+    void Set_type(std::string type){this->type = type;}
+    std::string Get_type(){return type;}
+    void Set_status(std::string status){this->status = status;}
+    std::string Get_status(){return status;}
     ~device() 
     {
 
@@ -91,60 +49,18 @@ class device
 class router : public device
 {
     public:
-        router()
-        {
-
-        }
-        router(std::string ip,int ports) : device(ip, ports)
-        {
-           
-        }
-        router(std::string ip,int ports,std::string name) : device(ip, ports, name)
-        {
-
-        }
-        router(std::string ip,int ports,std::string name,std::string type) : device(ip, ports, name ,type)
-        {
-
-        }
-        ~router()
-        {
-
-        }
+        using device::device;
 
         void ShowInfo() override
         {
             std::cout << "IP: " << Get_IP() << "\nPorts: " << Get_Ports() << "\nName: " << Get_name();
         }
-
-
-
 };
 class pc : public device
 {
-    private:
-
     public:
-        pc() 
-        {
+        using device::device;
 
-        }
-        pc(std::string ip,int ports) : device (ip,ports)
-        {
-
-        }
-        pc(std::string ip,int ports,std::string name) : device(ip,ports,name)
-        {
-
-        }
-        pc(std::string ip,int ports,std::string name,std::string type) : device (ip, ports, name ,type)
-        {
-
-        }
-        ~pc()
-        {
-            
-        }
         void ShowInfo() override
         {
             std::cout << "IP: " << Get_IP() << "\nPorts: " << Get_Ports() << "\nName: " << Get_name();
@@ -152,38 +68,9 @@ class pc : public device
 };
 class switch_ : public device
 {
-
-    private:
-
     public:
-        switch_() 
-        {
+        using device::device;
 
-        }
-        switch_(int ports,std::string name) : device (" ",ports,name)
-        {
-
-        }
-        switch_(std::string name) : device("",8,name)
-        {
-
-        }
-        switch_(int ports) : device("",ports,"SWITCH")
-        {
-
-        }
-        switch_(std::string ip,int ports,std::string name) : device (ip,ports,name)
-        {
-
-        }
-        switch_(std::string ip,int ports,std::string name,std::string type) : device (ip, ports, name ,type)
-        {
-
-        }
-        ~switch_()
-        {
-            
-        }
         void ShowInfo() override
         {
             std::cout << "IP: " << Get_IP() << "\nPorts: " << Get_Ports() << "\nName: " << Get_name();
@@ -191,30 +78,9 @@ class switch_ : public device
 };
 class hub : public device
 {
-
-    private:
-
     public:
-        hub() 
-        {
+        using device::device;
 
-        }
-        hub(std::string ip,int ports) : device (ip,ports)
-        {
-
-        }
-        hub(std::string ip,int ports,std::string name) : device(ip,ports,name)
-        {
-
-        }
-        hub(std::string ip,int ports,std::string name,std::string type) : device(ip, ports, name ,type)
-        {
-
-        }
-        ~hub()
-        {
-            
-        }
         void ShowInfo() override
         {
             std::cout << "IP: " << Get_IP() << "\nPorts: " << Get_Ports() << "\nName: " << Get_name();
@@ -222,40 +88,25 @@ class hub : public device
 };
 class server : public device
 {
-
-    private:
-
     public:
-        server() 
-        {
+        using device::device;
 
-        }
-        server(std::string ip,int ports) : device (ip,ports)
-        {
-
-        }
-        server(std::string ip,int ports,std::string name) : device(ip,ports,name)
-        {
-
-        }
-        server(std::string ip,int ports,std::string name,std::string type) : device(ip, ports, name ,type)
-        {
-
-        }
-        ~server()
-        {
-            
-        }
         void ShowInfo() override
         {
             std::cout << "IP: " << Get_IP() << "\nPorts: " << Get_Ports() << "\nName: " << Get_name();
         }
 };
+void clear()
+{
+    system("clear");
+}
+
+void Asking(std::vector <device*>& devises_array,int &devices);
 
 void Interface(std::vector <device*>& devises_array,int &devices)
 {
     std::cout << "You have " << devices << " devices" << std::endl;
-    
+    int router_county = 0,pc_county = 0,switch_county = 0,hub_county = 0,server_county = 0;
     ////////////////////Router////////////////////////////////////
     
     std::cout << "Router: " << std::endl;
@@ -263,9 +114,10 @@ void Interface(std::vector <device*>& devises_array,int &devices)
     {
         if(devises_array[i]->Get_type() == "router")
             {
-                std::cout << " \t"<< i + 1 <<"\t\tIP: " <<devises_array[i]->Get_IP() 
+                router_county++;
+                std::cout << " \t"<< router_county <<"\t\tIP: " <<devises_array[i]->Get_IP() 
                 << "\t\tPorts: " << devises_array[i]->Get_Ports()
-                << "\tName: " << devises_array[i]->Get_name() << std::endl; 
+                << "\tName: " << devises_array[i]->Get_name() << "\tStatus: " << devises_array[i]->Get_status() << std::endl; 
             }
     }
 
@@ -276,7 +128,8 @@ void Interface(std::vector <device*>& devises_array,int &devices)
     {
         if(devises_array[i]->Get_type() == "pc")
             {
-                std::cout << " \t"<< i + 1 <<"\t\tIP: " <<devises_array[i]->Get_IP() 
+                pc_county++;
+                std::cout << " \t"<< pc_county <<"\t\tIP: " <<devises_array[i]->Get_IP() 
                 << "\t\tPorts: " << devises_array[i]->Get_Ports()
                 << "\tName: " << devises_array[i]->Get_name() << std::endl;
             }
@@ -289,7 +142,8 @@ void Interface(std::vector <device*>& devises_array,int &devices)
     {
         if(devises_array[i]->Get_type() == "switch")
             {
-                std::cout << " \t"<< i + 1 <<"\t\tIP: " <<devises_array[i]->Get_IP() 
+                switch_county++;
+                std::cout << " \t"<< switch_county <<"\t\tIP: " <<devises_array[i]->Get_IP() 
                 << "\t\tPorts: " << devises_array[i]->Get_Ports()
                 << "\tName: " << devises_array[i]->Get_name() << std::endl;
             }
@@ -302,7 +156,8 @@ void Interface(std::vector <device*>& devises_array,int &devices)
     {
         if(devises_array[i]->Get_type() == "hub")
             {
-                std::cout << " \t"<< i + 1 <<"\t\tIP: " <<devises_array[i]->Get_IP() 
+                hub_county++;
+                std::cout << " \t"<< hub_county <<"\t\tIP: " <<devises_array[i]->Get_IP() 
                 << "\t\tPorts: " << devises_array[i]->Get_Ports()
                 << "\tName: " << devises_array[i]->Get_name() << std::endl;
             }
@@ -315,18 +170,21 @@ void Interface(std::vector <device*>& devises_array,int &devices)
     {
         if(devises_array[i]->Get_type() == "server")
             {
-                std::cout << " \t"<< i + 1 <<"\t\tIP: " <<devises_array[i]->Get_IP() 
+                server_county++;
+                std::cout << " \t"<< server_county <<"\t\tIP: " <<devises_array[i]->Get_IP() 
                 << "\t\tPorts: " << devises_array[i]->Get_Ports()
                 << "\tName: " << devises_array[i]->Get_name() << std::endl;
             }        
     }
+    //!!!!!!!!!!!!!!!!!!!!!Asking(devises_array,devices);!!!!!!!!!!!!!!!!!!!!!!!!
     //adding new name for int in for
 }
 
 void Asking(std::vector <device*>& devises_array,int &devices);
+
 void Add_device(std::vector <device*>& devises_array,int &devices,std::string type)
 {
-    system("clear");
+    clear();
     int ports = 1;
     std::string ip,name;
     devices++;
@@ -348,44 +206,108 @@ void Add_device(std::vector <device*>& devises_array,int &devices,std::string ty
     else if(type == "switch"){devises_array.push_back(new switch_(ip,ports,name,"switch"));}
     else if(type == "hub"){devises_array.push_back(new hub(ip,ports,name,"hub"));}
     else if(type == "server"){devises_array.push_back(new server(ip,ports,name,"server"));}
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
     Asking(devises_array,devices);
 }
+
 void Asking(std::vector <device*>& devises_array,int &devices)
 {
     std::string check;
-    system("clear");
+    clear();
     Interface(devises_array,devices); 
-    std::cout << "Do you want to add something?(y/n)";
-    std::cin >> check;
-    system("clear");
-    if(check == "n" || check == "N")
-    {
-        std::cout << "End!";
-    }
-    if(check == "Y" || check == "y")
-    {
-        int choice;
+    //std::cout << "Do you want to add something?(y/n)";
+    //std::cin >> check;
+    //clear();
+    //if(check == "n" || check == "N")
+    //{
+    //   std::cout << "End!";
+    //}
+    //if(check == "Y" || check == "y")
+    //{
+        //int choice;
+        std::string cmd,word1,word2;
         std::string type;
+        int space_counter = 0;
         std::cout << "Devices: " << std::endl;
         std::cout << "[1] - Router" << std::endl;
         std::cout << "[2] - PC" << std::endl;
         std::cout << "[3] - Switch" << std::endl;
         std::cout << "[4] - Hub" << std::endl;
         std::cout << "[5] - Server" << std::endl;
-        std::cin >> choice;
-        if(choice == 1){type = "router";}
-        if(choice == 2){type = "pc";}
-        if(choice == 3){type = "switch";}
-        if(choice == 4){type = "hub";}
-        if(choice == 5){type = "server";}
+        //std::cin.ignore();
+               
+        std::cout << ">";std::getline(std::cin,cmd);
+        for(int i = 0;i < cmd.length();i++){
+            if(cmd[i] == ' '){space_counter++;}
+        }
+        //std::clog << space_counter;
+        if(space_counter == 1){
+        size_t space = cmd.find(' ');
+        if(space != std::string::npos){
+            word1 = cmd.substr(0,space);
+            word2 = cmd.substr(space + 1);
+        }
+        //std::cout << word1 << " " << word2;
+        }
+        if(word1 == "add")
+        {
+        if(word2 == "router"){type = "router";}
+        if(word2 == "pc"){type = "pc";}
+        if(word2 == "switch"){type = "switch";}
+        if(word2 == "hub"){type = "hub";}
+        if(word2 == "server"){type = "server";}
         Add_device(devises_array,devices,type);
+        }else std::cout << "Error";
+        if(word1 == "enter")
+        {
+            for (int i = 0; i < devises_array.size(); i++)
+            {
+                if(word2 == devises_array[i]->Get_name())
+                {
+                    clear();
+                    std::cout << "Changer: ";
+                    std::string device_changer;
+                    std::cout << ">";std::cin >> device_changer;
+                    if(device_changer == "ip")
+                    {
+                        std::string ip;
+                        Ip_checker(&ip);
+                        devises_array[i]->Set_IP(ip); 
+                        Interface(devises_array,devices);
+                    }
+                    if(device_changer == "ports")
+                    {
+                        int ports;
+                        std::cin >> ports;
+                        devises_array[i]->Set_Ports(ports);
+                        Interface(devises_array,devices); 
+                    }
+                    if(device_changer == "name")
+                    {
+                        std::string name;
+                        std::cin >> name;
+                        devises_array[i]->Set_name(name);
+                        Interface(devises_array,devices); 
+                    }
+                    if(device_changer == "status")
+                    {
+                        std::string status;
+                        std::cin >> status;
+                        devises_array[i]->Set_status(status);
+                        Interface(devises_array,devices); 
+                    }
+                }
+            }
+            
+        }
+        
         
   
-    }
-    else 
+    
+    /*else 
     {
         std::cout << "Try again";
-    }
+    }*/
 }
 
 
@@ -474,8 +396,11 @@ int main()
 }
 //add posibility to add other devices +
 //add ip cheker +
-//add liste of devices
+//add liste of devices +
 //add ability to connect wirelles devices
+    //add status +
+    //add change all for device (name) +
+    // try to connect wirelles devices
 //try to add saving to file  
 
 
